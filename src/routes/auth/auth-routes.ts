@@ -12,10 +12,10 @@ router.post('/student-change-password', (req, res) => auth.login(req, res))
 router.post('/teacher-change-password', (req, res) => auth.login(req, res))
 router.post('/admin-change-password', (req, res) => auth.login(req, res))
 
-router.post('/invite-student', (req, res) => auth.userRegister(req, res))
-router.post('/invite-teacher', (req, res) => auth.teacherRegister(req, res))
-router.post('/invite-subadmin', (req, res) => auth.subAdminRegister(req, res))
-router.post('/invite-admin', (req, res) => auth.subAdminRegister(req, res))
+router.post('/invite-student', (req, res) => auth.userInvaite(req, res))
+router.post('/invite-teacher', (req, res) => auth.teacherInvaite(req, res))
+router.post('/invite-subadmin', (req, res) => auth.subAdminInvaite(req, res))
+router.post('/invite-admin', (req, res) => auth.adminRegister(req, res))
 
 router.get('/profile', (req, res) => auth.getProfile(req, res))
 

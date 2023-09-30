@@ -2,12 +2,13 @@ import { AuthService } from "../services/auth-service"
 import { IAuth } from "../types/interfaces/auth-interfaces"
 import { ExpressRequest, ExpressResponse } from "../types/interfaces/app-context-interfaces"
 import { ControllerBase } from "../utils/class/controller-base"
+import { email_text, mailer } from "../utils/functions/mailer"
 
 
 export class AuthController extends ControllerBase {
     private authService = new AuthService()
 
-    userRegister = async (request: ExpressRequest, response: ExpressResponse) => {
+    userInvaite = async (request: ExpressRequest, response: ExpressResponse) => {
         const body: IAuth = request.body
         try {
             body.email = body.email.toLowerCase()
@@ -23,13 +24,14 @@ export class AuthController extends ControllerBase {
                 role: "user",
                 createdAt: new Date()
             })
+            const email=mailer(body?.email,email_text.student_invitation_subject,email_text.student_invitation.replace('[reciever-name]',body?.name))
             this.jsonResponse(response, null, auth);
         } catch (e) {
             this.error(response, 500, null, e)
         }
     }
 
-    teacherRegister = async (request: ExpressRequest, response: ExpressResponse) => {
+    teacherInvaite = async (request: ExpressRequest, response: ExpressResponse) => {
         const body: IAuth = request.body
         try {
             body.email = body.email.toLowerCase()
@@ -39,19 +41,20 @@ export class AuthController extends ControllerBase {
             }
             const auth = await this.authService.createAuthEntry({
                 name: body?.name,
-                password: body?.password,
+                // password: body?.password,
                 email: body?.email,
                 mobile_no: body?.mobile_no,
                 role: "teacher",
                 createdAt: new Date()
             })
+            const email=mailer(body?.email,email_text.teacher_invitation_subject,email_text.teacher_invitation.replace('[reciever-name]',body?.name))
             this.jsonResponse(response, null, auth);
         } catch (e) {
             this.error(response, 500, null, e)
         }
     }
 
-    subAdminRegister = async (request: ExpressRequest, response: ExpressResponse) => {
+    subAdminInvaite = async (request: ExpressRequest, response: ExpressResponse) => {
         console.log("request c",request.body)
         const body: IAuth = request.body
         try {
@@ -62,12 +65,13 @@ export class AuthController extends ControllerBase {
             }
             const auth = await this.authService.createAuthEntry({
                 name: body?.name,
-                password: body?.password,
+                // password: body?.password,
                 email: body?.email,
                 mobile_no: body?.mobile_no,
                 role: "subadmin",
                 createdAt: new Date()
             })
+            const email=mailer(body?.email,email_text.admin_invitation_subject,email_text.admin_invitation.replace('[reciever-name]',body?.name))
             this.jsonResponse(response, null, auth);
         } catch (e) {
             this.error(response, 500, null, e)
@@ -91,6 +95,29 @@ export class AuthController extends ControllerBase {
                 role: "admin",
                 createdAt: new Date()
             })
+            this.jsonResponse(response, null, auth);
+        } catch (e) {
+            this.error(response, 500, null, e)
+        }
+    }
+
+    userRegister = async (request: ExpressRequest, response: ExpressResponse) => {
+        const body: IAuth = request.body
+        try {
+            body.email = body.email.toLowerCase()
+            let user = await this.authService.getUser(body.email);
+            if (user) {
+                return this.error(response, 400, "user already exists..!");
+            }
+            const auth = await this.authService.createAuthEntry({
+                name: body?.name,
+                password: body?.password,
+                email: body?.email,
+                mobile_no: body?.mobile_no,
+                role: "user",
+                createdAt: new Date()
+            })
+        const email=mailer(body?.email,email_text.student_registration_subject,email_text.student_registration)
             this.jsonResponse(response, null, auth);
         } catch (e) {
             this.error(response, 500, null, e)
