@@ -1,4 +1,4 @@
-import AuthModel from "../models/auth-model";
+import AuthModel from "../models/auth/auth-model";
 import { IAuth } from "../types/interfaces/auth-interfaces";
 
 export class AdminService{

@@ -3,24 +3,31 @@ import { IAuth } from "../types/interfaces/auth-interfaces"
 import { ExpressRequest, ExpressResponse } from "../types/interfaces/app-context-interfaces"
 import { ControllerBase } from "../utils/class/controller-base"
 import { email_text, mailer } from "../utils/functions/mailer"
+import { BcryptHandler } from "../utils/class/bcrypt-handler"
+import { bodyRequiredDataValidator } from "../utils/functions/validator"
 
 
 export class AuthController extends ControllerBase {
     private authService = new AuthService()
+    private bcrypt = new BcryptHandler()
 
     userInvaite = async (request: ExpressRequest, response: ExpressResponse) => {
         const body: IAuth = request.body
         try {
+            const required = ["name", "email"]
+            const validationError = bodyRequiredDataValidator(body, required);
+            if (validationError) {
+                return this.error(response, 400, undefined, validationError)
+            }
             body.email = body.email.toLowerCase()
             let user = await this.authService.getUser(body.email);
             if (user) {
                 return this.error(response, 400, "user already exists..!");
             }
+            const userDetail = await this.authService.createUser(body);
             const auth = await this.authService.createAuthEntry({
-                name: body?.name,
-                password: body?.password,
+                userId:userDetail?._id,
                 email: body?.email,
-                mobile_no: body?.mobile_no,
                 role: "user",
                 createdAt: new Date()
             })
@@ -39,11 +46,10 @@ export class AuthController extends ControllerBase {
             if (user) {
                 return this.error(response, 400, "user already exists..!");
             }
+            const userDetail = await this.authService.createTeacher(body);
             const auth = await this.authService.createAuthEntry({
-                name: body?.name,
-                // password: body?.password,
+                userId:userDetail?._id,
                 email: body?.email,
-                mobile_no: body?.mobile_no,
                 role: "teacher",
                 createdAt: new Date()
             })
@@ -63,11 +69,10 @@ export class AuthController extends ControllerBase {
             if (user) {
                 return this.error(response, 400, "user already exists..!");
             }
+            const userDetail = await this.authService.createAdmin(body);
             const auth = await this.authService.createAuthEntry({
-                name: body?.name,
-                // password: body?.password,
+                userId:userDetail?._id,
                 email: body?.email,
-                mobile_no: body?.mobile_no,
                 role: "subadmin",
                 createdAt: new Date()
             })
@@ -87,11 +92,12 @@ export class AuthController extends ControllerBase {
             if (user) {
                 return this.error(response, 400, "user already exists..!");
             }
+            body.password = await this.bcrypt.getPasswordHash(body.password);
+            const userDetail = await this.authService.createAdmin(body);
             const auth = await this.authService.createAuthEntry({
-                name: body?.name,
-                password: body?.password,
+                userId:userDetail?._id,
                 email: body?.email,
-                mobile_no: body?.mobile_no,
+                password: body?.password,
                 role: "admin",
                 createdAt: new Date()
             })
@@ -109,11 +115,12 @@ export class AuthController extends ControllerBase {
             if (user) {
                 return this.error(response, 400, "user already exists..!");
             }
+            body.password = await this.bcrypt.getPasswordHash(body.password);
+            const userDetail = await this.authService.createUser(body);
             const auth = await this.authService.createAuthEntry({
-                name: body?.name,
-                password: body?.password,
+                userId:userDetail?._id,
                 email: body?.email,
-                mobile_no: body?.mobile_no,
+                password: body?.password,
                 role: "user",
                 createdAt: new Date()
             })
@@ -129,9 +136,13 @@ export class AuthController extends ControllerBase {
         console.log("login",request.body)
         try {
             body.email = body.email.toLowerCase()
-            let user = await this.authService.Login(body.email, body.password, body.role);
+            let userData = await this.authService.getUser(body.email);
+            const validUser = await this.bcrypt.verifyPasswordHash(userData.password, body.password);
+          if (!validUser) {
+              return this.error(response, 401, "incorrect_password")
+          }
+            let user = await this.authService.Login(body.email,body.role);
             let profile = {
-                name: user?.name,
                 email: user?.email,
                 disabled: user?.disabled,
                 created: user?.createdAt,
@@ -147,13 +158,14 @@ export class AuthController extends ControllerBase {
         }
     }
 
+
+
     getProfile = async (request: ExpressRequest, response: ExpressResponse) => {
         const userId = request.query.id
         //   console.log("request",request.query.id)
         try {
             let user = await this.authService.getUserProfile(userId);
             let profile = {
-                name: user?.name,
                 email: user?.email,
                 disabled: user?.disabled,
                 created: user?.createdAt,
