@@ -51,7 +51,31 @@ export class AuthController extends ControllerBase {
         }
     }
 
+    subAdminRegister = async (request: ExpressRequest, response: ExpressResponse) => {
+        console.log("request c",request.body)
+        const body: IAuth = request.body
+        try {
+            body.email = body.email.toLowerCase()
+            let user = await this.authService.getUser(body.email);
+            if (user) {
+                return this.error(response, 400, "user already exists..!");
+            }
+            const auth = await this.authService.createAuthEntry({
+                name: body?.name,
+                password: body?.password,
+                email: body?.email,
+                mobile_no: body?.mobile_no,
+                role: "subadmin",
+                createdAt: new Date()
+            })
+            this.jsonResponse(response, null, auth);
+        } catch (e) {
+            this.error(response, 500, null, e)
+        }
+    }
+
     adminRegister = async (request: ExpressRequest, response: ExpressResponse) => {
+        console.log("request c",request.body)
         const body: IAuth = request.body
         try {
             body.email = body.email.toLowerCase()
@@ -75,6 +99,7 @@ export class AuthController extends ControllerBase {
 
     login = async (request: ExpressRequest, response: ExpressResponse) => {
         const body: IAuth = request.body
+        console.log("login",request.body)
         try {
             body.email = body.email.toLowerCase()
             let user = await this.authService.Login(body.email, body.password, body.role);
