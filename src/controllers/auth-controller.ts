@@ -26,9 +26,10 @@ export class AuthController extends ControllerBase {
             }
             const userDetail = await this.authService.createUser(body);
             const auth = await this.authService.createAuthEntry({
-                userId:userDetail?._id,
+                profile_id:userDetail?._id,
                 email: body?.email,
                 role: "user",
+                updatedAt: new Date(),
                 createdAt: new Date()
             })
             const email=mailer(body?.email,email_text.student_invitation_subject,email_text.student_invitation.replace('[reciever-name]',body?.name))
@@ -48,9 +49,10 @@ export class AuthController extends ControllerBase {
             }
             const userDetail = await this.authService.createTeacher(body);
             const auth = await this.authService.createAuthEntry({
-                userId:userDetail?._id,
+                profile_id:userDetail?._id,
                 email: body?.email,
                 role: "teacher",
+                updatedAt: new Date(),
                 createdAt: new Date()
             })
             const email=mailer(body?.email,email_text.teacher_invitation_subject,email_text.teacher_invitation.replace('[reciever-name]',body?.name))
@@ -71,9 +73,10 @@ export class AuthController extends ControllerBase {
             }
             const userDetail = await this.authService.createAdmin(body);
             const auth = await this.authService.createAuthEntry({
-                userId:userDetail?._id,
+                profile_id:userDetail?._id,
                 email: body?.email,
                 role: "subadmin",
+                updatedAt: new Date(),
                 createdAt: new Date()
             })
             const email=mailer(body?.email,email_text.admin_invitation_subject,email_text.admin_invitation.replace('[reciever-name]',body?.name))
@@ -95,10 +98,11 @@ export class AuthController extends ControllerBase {
             body.password = await this.bcrypt.getPasswordHash(body.password);
             const userDetail = await this.authService.createAdmin(body);
             const auth = await this.authService.createAuthEntry({
-                userId:userDetail?._id,
+                profile_id:userDetail?._id,
                 email: body?.email,
                 password: body?.password,
                 role: "admin",
+                updatedAt: new Date(),
                 createdAt: new Date()
             })
             this.jsonResponse(response, null, auth);
@@ -118,13 +122,39 @@ export class AuthController extends ControllerBase {
             body.password = await this.bcrypt.getPasswordHash(body.password);
             const userDetail = await this.authService.createUser(body);
             const auth = await this.authService.createAuthEntry({
-                userId:userDetail?._id,
+                profile_id:userDetail?._id,
                 email: body?.email,
                 password: body?.password,
                 role: "user",
+                updatedAt: new Date(),
                 createdAt: new Date()
             })
         const email=mailer(body?.email,email_text.student_registration_subject,email_text.student_registration)
+            this.jsonResponse(response, null, auth);
+        } catch (e) {
+            this.error(response, 500, null, e)
+        }
+    }
+
+    setPassword = async (request: ExpressRequest, response: ExpressResponse) => {
+        const id=request.params.id
+        console.log("data",request.body,request.params)
+        const body: IAuth = request.body
+        try {
+            body.email = body.email.toLowerCase()
+            let user = await this.authService.getUser(body.email);
+            if (!user) {
+                return this.error(response, 400, "user doesn't exists..!");
+            }
+            if(user._id!=id){
+                return this.error(response, 400, "user doesn't exists..!");
+            }
+            body.password = await this.bcrypt.getPasswordHash(body.password);
+            const auth = await this.authService.updateAuth(id,{
+                password: body?.password,
+                updatedAt:new Date
+            })
+        // const email=mailer(body?.email,email_text.student_registration_subject,email_text.student_registration)
             this.jsonResponse(response, null, auth);
         } catch (e) {
             this.error(response, 500, null, e)
@@ -141,12 +171,14 @@ export class AuthController extends ControllerBase {
           if (!validUser) {
               return this.error(response, 401, "incorrect_password")
           }
-            let user = await this.authService.Login(body.email,body.role);
+            let user = await this.authService.Login(body.email,userData.password);
+            console.log("user",user)
             let profile = {
                 email: user?.email,
                 disabled: user?.disabled,
                 created: user?.createdAt,
                 role: user?.role,
+                profile_id:user?.profile_id,
                 _id: user?._id
             }
             if (!profile) {
@@ -161,10 +193,10 @@ export class AuthController extends ControllerBase {
 
 
     getProfile = async (request: ExpressRequest, response: ExpressResponse) => {
-        const userId = request.query.id
+        const profile_id = request.query.id
         //   console.log("request",request.query.id)
         try {
-            let user = await this.authService.getUserProfile(userId);
+            let user = await this.authService.getUserProfile(profile_id);
             let profile = {
                 email: user?.email,
                 disabled: user?.disabled,

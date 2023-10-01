@@ -5,9 +5,13 @@ import { IAuth, IUser } from "../types/interfaces/auth-interfaces";
 export class AuthService{
     constructor(){}
     createAuthEntry =  async (auth:IAuth):Promise<IAuth> => {
-        console.log("auth service",auth)
         return AuthModel.create(auth);
     }
+
+    updateAuth =  async (id:any,auth:IAuth):Promise<IAuth> => {
+        return AuthModel.findByIdAndUpdate(id, auth, { new: true });
+    }
+
     createUser =  async (user:IUser):Promise<IUser> => {
         return UserModel.create(user);
     }
@@ -24,8 +28,8 @@ export class AuthService{
         return await AuthModel.findOne({email})
     }
 
-    Login = async (email,role):Promise<IAuth> =>{
-        return await AuthModel.findOne({email,role})
+    Login = async (email,password):Promise<IAuth> =>{
+        return await AuthModel.findOne({email,password})
     }
 
     getUserProfile = async (_id):Promise<IAuth> =>{
