@@ -81,14 +81,14 @@ export class AuthController extends ControllerBase {
         console.log("data", request.body, request.params)
         const body: IAuth = request.body
         try {
-            body.email = body.email.toLowerCase()
-            let user = await this.authService.getUser(body.email);
-            if (!user) {
-                return this.error(response, 400, "user doesn't exists..!");
-            }
-            if (user._id != id) {
-                return this.error(response, 400, "user doesn't exists..!");
-            }
+            // body.email = body.email.toLowerCase()
+            // let user = await this.authService.getUser(body.email);
+            // if (!user) {
+            //     return this.error(response, 400, "user doesn't exists..!");
+            // }
+            // if (user._id != id) {
+            //     return this.error(response, 400, "user doesn't exists..!");
+            // }
             body.password = await this.bcrypt.getPasswordHash(body.password);
             const auth = await this.authService.updateAuth(id, {
                 password: body?.password,
