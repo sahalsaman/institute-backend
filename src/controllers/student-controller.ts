@@ -1,6 +1,6 @@
 import { ExpressRequest, ExpressResponse } from "../types/interfaces/app-context-interfaces"
 import { ControllerBase } from "../utils/class/controller-base"
-import { UserService } from "../services/user-service"
+import { UserService } from "../services/student-service"
 import { IProduct } from "../types/interfaces/product-interface"
 import { bodyRequiredDataValidator } from "../utils/functions/validator"
 

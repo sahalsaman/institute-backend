@@ -12,7 +12,7 @@ export class AuthService{
         return AuthModel.findByIdAndUpdate(id, auth, { new: true });
     }
 
-    createUser =  async (user:IUser):Promise<IUser> => {
+    createStudent =  async (user:IUser):Promise<IUser> => {
         return UserModel.create(user);
     }
 
