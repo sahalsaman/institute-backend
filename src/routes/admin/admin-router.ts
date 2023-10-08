@@ -6,6 +6,7 @@ const admin = new AdminController
 
 // get api
 
+router.get('/profile', (req, res) => admin.getUsersList(req, res))
 router.get('/get-users-list', (req, res) => admin.getUsersList(req, res))
 router.get('/get-teacher-list', (req, res) => admin.getUsersList(req, res))
 router.get('/get-users-detail', (req, res) => admin.getUsersList(req, res))

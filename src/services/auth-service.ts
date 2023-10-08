@@ -1,5 +1,7 @@
-import AuthModel from "../models/auth/auth-model";
-import UserModel from "../models/auth/user-modal";
+import AdminModel from "../models/admin-modal";
+import AuthModel from "../models/auth-model";
+import TeacherModel from "../models/teacher-modal";
+import UserModel from "../models/user-modal";
 import { IAuth, IUser } from "../types/interfaces/auth-interfaces";
 
 export class AuthService{
@@ -17,11 +19,11 @@ export class AuthService{
     }
 
     createTeacher =  async (user:IUser):Promise<IUser> => {
-        return UserModel.create(user);
+        return TeacherModel.create(user);
     }
 
     createAdmin =  async (user:IUser):Promise<IUser> => {
-        return UserModel.create(user);
+        return AdminModel.create(user);
     }
 
     getUser = async (email):Promise<IAuth> =>{

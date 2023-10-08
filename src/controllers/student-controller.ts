@@ -44,8 +44,8 @@ export class UserController extends ControllerBase {
                 created: new Date().getDate(),
                 createdBy: body?.createdBy,
             }
-            const res = await this.userService.craeteNewProduct(newProduct)
-            product.push(res)
+            // const res = await this.userService.craeteNewProduct(newProduct)
+            // product.push(res)
             this.jsonResponse(response, null,product);
         } catch (e) {
             this.error(response, 500, null, e)
@@ -57,9 +57,9 @@ export class UserController extends ControllerBase {
 
     getProductList = async (request: ExpressRequest, response: ExpressResponse) => {
         try {
-            let product = await this.userService.getProductlist();
+            // let product = await this.userService.getProductlist();
         
-            this.jsonResponse(response, null, product);
+            // this.jsonResponse(response, null, product);
         } catch (e) {
             this.error(response, 500, null, e)
         }

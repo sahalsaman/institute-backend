@@ -39,7 +39,7 @@ export class AuthController extends ControllerBase {
                 updatedAt: new Date(),
                 createdAt: new Date()
             })
-            const email = mailer(body?.email, email_text.student_invitation_subject, email_text.student_invitation.replace('[reciever-name]', body?.name), email_text.set_password_html.replace('[user-id]', auth?._id))
+            const email = mailer(body?.email, email_text.student_invitation_subject, email_text.student_invitation.replace('[reciever-name]', body?.name)+ email_text.set_password_html.replace('[user-id]', auth?._id))
             this.jsonResponse(response, null, auth);
         } catch (e) {
             this.error(response, 500, null, e)
@@ -59,8 +59,10 @@ export class AuthController extends ControllerBase {
             var userDetail:any
             if (body.role == "admin") {
                 userDetail = await this.authService.createAdmin(body);
-            }{
+            }else if (body.role == "user"){
                 userDetail = await this.authService.createStudent(body);
+            }else{
+                userDetail = await this.authService.createTeacher(body);
             }
             const auth = await this.authService.createAuthEntry({
                 profile_id: userDetail?._id,
