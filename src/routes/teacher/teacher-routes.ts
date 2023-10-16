@@ -4,7 +4,7 @@ import { TeacherController } from "../../controllers/teacher-controller";
 const router=Router()
 const teacher = new TeacherController
 
-router.get('/profile', (req, res) => teacher.addProduct(req, res))
+router.get('/me', (req, res) => teacher.addProduct(req, res))
 router.get('/get-users-list', (req, res) => teacher.addProduct(req, res))
 router.get('/get-users-detail', (req, res) => teacher.addProduct(req, res))
 router.get('/get-result-list', (req, res) => teacher.addProduct(req, res))

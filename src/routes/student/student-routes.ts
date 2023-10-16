@@ -5,7 +5,7 @@ const router=Router()
 const user = new UserController
 
 
-router.get('/profile', (req, res) =>user.addProduct(req, res))
+router.get('/me', (req, res) =>user.addProduct(req, res))
 router.get('/get-result-list', (req, res) =>user.addProduct(req, res))
 router.get('/get-time-schedule', (req, res) =>user.addProduct(req, res))
 router.get('/get-result', (req, res) =>user.addProduct(req, res))

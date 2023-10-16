@@ -12,7 +12,7 @@ export interface IAuth {
     createdAt?:Date
 }
 
-export interface IUser {
+export interface IStudent {
     _id ?: string,
     name?: string,
     email?: string,

@@ -1,22 +1,29 @@
 import AuthModel from "../models/auth-model";
-import { IAuth } from "../types/interfaces/auth-interfaces";
+import StudentModel from "../models/student-modal";
+import { IAuth, IStudent } from "../types/interfaces/auth-interfaces";
 
 export class AdminService{
     constructor(){}
-    // createAuthEntry =  async (auth:IAuth):Promise<IAuth> => {
-    //     console.log("auth service",auth)
-    //     return AuthModel.create(auth);
-    // }
 
-    // getUser = async (email):Promise<IAuth> =>{
-    //     return await AuthModel.findOne({email})
-    // }
+     getStudentList= async (search?:string): Promise<IStudent[]> => {
+        let filter:any={}
+        if (search) {
+            filter ={ $or: [{ companyName : {$regex: search, $options: 'i'}}, {address: {$regex: search, $options: 'i'}}] }
+         }
+        let studentList = await StudentModel.find(filter).sort({ 'created': -1 })
+            return studentList
+    }
 
-    // Login = async (email,password,role):Promise<IAuth> =>{
-    //     return await AuthModel.findOne({email,password,role})
-    // }
+    getStudentCount= async (search?:string): Promise<number> => {
+        let filter:any={}
+        if (search) {
+            filter = { $or: [{ companyName : {$regex: search, $options: 'i'}}, {address: {$regex: search, $options: 'i'}}] }
 
-    // getUserProfile = async (_id):Promise<IAuth> =>{
-    //     return await AuthModel.findOne({_id})
-    // }
+        }
+        return await StudentModel.countDocuments(filter).sort({ 'created': -1 })
+    }
+
+
+
+
 }

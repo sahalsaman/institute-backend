@@ -17,3 +17,7 @@ export enum logLevel {
   INFO = 4,
   DEBUG = 5,
 }
+export enum DateSortOrder {
+  ASCENDING = 'ascending',
+  DESCENDING = 'descending'
+}

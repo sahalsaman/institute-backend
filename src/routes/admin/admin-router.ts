@@ -6,7 +6,7 @@ const admin = new AdminController
 
 // get api
 
-router.get('/profile', (req, res) => admin.getStudentList(req, res))
+router.get('/me', (req, res) => admin.getStudentList(req, res))
 router.get('/get-student-list', (req, res) => admin.getStudentList(req, res))
 router.get('/get-teacher-list', (req, res) => admin.getStudentList(req, res))
 router.get('/get-student-detail', (req, res) => admin.getStudentList(req, res))
