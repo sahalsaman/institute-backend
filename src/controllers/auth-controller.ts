@@ -46,7 +46,7 @@ export class AuthController extends ControllerBase {
         }
     }
 
-    userRegister = async (request: ExpressRequest, response: ExpressResponse) => {
+    studentRegister = async (request: ExpressRequest, response: ExpressResponse) => {
         console.log("request c", request.body)
         const body: IAuth = request.body
         try {

@@ -1,25 +1,19 @@
-export enum Role{
-  ADMIN='admin',
-  CLIENT='client',
-  USER='user'
+export enum Role {
+  ADMIN = 'admin',
+  TEACHER = 'teacher',
+  STUDENT = 'student'
+}
+
+export enum ITokenPayload {
+  USER = 'user',
+  ROLE = 'role',
+  TOKEN = 'token'
 }
 
 export enum logLevel {
-    NOTHING = 0,
-    ERROR = 1,
-    WARN = 2,
-    INFO = 4,
-    DEBUG = 5,
-  }
-
-  export enum productCategory{
-    BIKE='bike',
-    CAR='car',
-    ROOM='room',
-    RESORT='resort',
-    GODOWN='godown',
-    PROPERTIES='properties',
-    ELECTRONICS='electronics',
-    FURNITURE='furniture',
-    CAMERA='camera',
-  }
+  NOTHING = 0,
+  ERROR = 1,
+  WARN = 2,
+  INFO = 4,
+  DEBUG = 5,
+}

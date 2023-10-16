@@ -32,24 +32,24 @@ export class AdminController extends ControllerBase {
 
 
     
-    getUsersList = async (request: ExpressRequest, response: ExpressResponse) => {
-        try{
-            // let user = await this.authService.getUserProfile(userId);
-            // let profile={
-            //     name:user?.name,
-            //     email:user?.email,
-            //     disabled:user?.disabled,
-            //     created:user?.createdAt,
-            //     role:user?.role,
-            //     _id:user?._id
-            // }
-            // if(!profile){
-            //     return this.error(response, 400, "user_not_found");
-            // }
-            // this.jsonResponse(response, null, profile);
-        }catch(e){
-            this.error(response, 500, null, e)
-        }
+    getStudentList = async (request: ExpressRequest, response: ExpressResponse) => {
+        // try{
+        //     let user = await this.authService.getUserProfile();
+        //     let profile={
+        //         name:user?.name,
+        //         email:user?.email,
+        //         disabled:user?.disabled,
+        //         created:user?.createdAt,
+        //         role:user?.role,
+        //         _id:user?._id
+        //     }
+        //     if(!profile){
+        //         return this.error(response, 400, "user_not_found");
+        //     }
+        //     this.jsonResponse(response, null, profile);
+        // }catch(e){
+        //     this.error(response, 500, null, e)
+        // }
     }
     
     getProfile = async (request: ExpressRequest, response: ExpressResponse) => {

@@ -1,7 +1,7 @@
 import AdminModel from "../models/admin-modal";
 import AuthModel from "../models/auth-model";
+import StudentModel from "../models/student-modal";
 import TeacherModel from "../models/teacher-modal";
-import UserModel from "../models/user-modal";
 import { IAuth, IUser } from "../types/interfaces/auth-interfaces";
 
 export class AuthService{
@@ -15,7 +15,7 @@ export class AuthService{
     }
 
     createStudent =  async (user:IUser):Promise<IUser> => {
-        return UserModel.create(user);
+        return StudentModel.create(user);
     }
 
     createTeacher =  async (user:IUser):Promise<IUser> => {

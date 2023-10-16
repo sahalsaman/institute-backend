@@ -42,3 +42,15 @@ export interface ITeacher {
     created?:Date,
     updated?:Date,
 }
+
+export interface IToken{
+    user?: string,
+    role?: string,
+    token?: string,
+}
+
+export interface ITokenPayload{
+    user?: string,
+    role?: string,
+    token?: string,
+}

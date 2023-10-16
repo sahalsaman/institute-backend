@@ -15,7 +15,7 @@ router.post('/login', (req, res) => auth.login(req, res))
 router.patch('/set-password/:id', (req, res) => auth.setPassword(req, res))
 
 router.post('/invite-student', (req, res) => {
-    req.body.role='user'
+    req.body.role='student'
     auth.userInvaite(req, res)
 })
 router.post('/invite-teacher', (req, res) => {

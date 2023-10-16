@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-// import { Role } from '../variables/enum'
+import { Role } from '../variables/enum'
 export interface ISuccessResponse {
     message: string,
     result?: any
@@ -17,11 +17,11 @@ export interface ExpressResponse extends Response {
 }
 
 export interface ITokenPayload {
-    // role?: Role,
+    role?: Role,
     _id?:string,
     email?:string,
     token?:string,
     userId?:string,
-    user_id?:string //uid
+    user_id?:string 
 }
 

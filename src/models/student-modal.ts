@@ -1,6 +1,6 @@
 import mongoose, {Schema} from "mongoose";
 
-const userDetailSchema=new mongoose.Schema({
+const studentDetailSchema=new mongoose.Schema({
     name:{type:String},
     email:{type:String, unique:true, required:true},
     mobile_no:{type:Number, unique:true},
@@ -20,5 +20,5 @@ const userDetailSchema=new mongoose.Schema({
     updated:{type:Date,default: Date.now},
 })
 
-const UserModel=mongoose.model<mongoose.Document>("user",userDetailSchema)
-export default UserModel
+const StudentModel=mongoose.model<mongoose.Document>("student",studentDetailSchema)
+export default StudentModel
