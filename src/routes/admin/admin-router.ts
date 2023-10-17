@@ -8,7 +8,7 @@ const admin = new AdminController
 
 router.get('/me', (req, res) => admin.getStudentList(req, res))
 router.get('/get-student-list', (req, res) => admin.getStudentList(req, res))
-router.get('/get-teacher-list', (req, res) => admin.getStudentList(req, res))
+router.get('/get-teacher-list', (req, res) => admin.getTeacherList(req, res))
 router.get('/get-student-detail', (req, res) => admin.getStudentList(req, res))
 router.get('/get-teacher-detail', (req, res) => admin.getStudentList(req, res))
 router.get('/get-result-list', (req, res) => admin.getStudentList(req, res))

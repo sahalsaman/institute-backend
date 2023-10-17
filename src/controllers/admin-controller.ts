@@ -21,6 +21,18 @@ export class AdminController extends ControllerBase {
             this.error(response, 500, null, e)
         }
     }
+
+    getTeacherList = async (request: ExpressRequest, response: ExpressResponse) => {
+        const search = request.query.search as string
+        try{
+            const studentList = await this.adminService.getStudentList(search)
+            const count = await this.adminService.getStudentCount(search)
+            this.jsonResponse(response,null,{count:count,data:studentList})
+        } catch (e) {
+            // logger.error(e)
+            this.error(response, 500, null, e)
+        }
+    }
     
     getProfile = async (request: ExpressRequest, response: ExpressResponse) => {
         const userId = request.query.id
