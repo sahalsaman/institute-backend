@@ -1,18 +1,13 @@
 import mongoose, {Schema} from "mongoose";
 
 const teacherDetailSchema=new mongoose.Schema({
+    _id: {type:String},
     name:{type:String},
     email:{type:String, unique:true, required:true},
     mobile_no:{type:Number, unique:true},
     photo:{type:String}, 
-    about:{type:String},
-    contry:{type:String},
-    states:{type:String},
-    city:{type:String},
     address:{type:String},
     date_of_birth:{type:String},
-    admission_date:{type:String},
-    employee_id:{type:String},
     subject:{type:String},
     remark:{type:String},
     role:{type:String},

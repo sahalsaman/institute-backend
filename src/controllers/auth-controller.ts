@@ -25,7 +25,7 @@ export class AuthController extends ControllerBase {
                 return this.error(response, 400, "user already exists..!");
             }
             var userDetail:any
-            if (body.role == "subadmin") {
+            if (body.role == "subadmin"||body.role == "admin") {
                 userDetail = await this.authService.createAdmin(body);
             } else if (body.role == "teacher") {
                 userDetail = await this.authService.createTeacher(body);
@@ -132,6 +132,21 @@ export class AuthController extends ControllerBase {
         }
     }
 
+    changePassword= async (request: ExpressRequest, response: ExpressResponse) => {
+        const id = request.params.id
+        console.log("data", request.body, request.params)
+        const body: IAuth = request.body
+        try {
+            body.password = await this.bcrypt.getPasswordHash(body.password);
+            const auth = await this.authService.updateAuth(id, {
+                password: body?.password,
+                updatedAt: new Date
+            })
+            this.jsonResponse(response, null, auth);
+        } catch (e) {
+            this.error(response, 500, null, e)
+        }
+    }
 
 
     getProfile = async (request: ExpressRequest, response: ExpressResponse) => {

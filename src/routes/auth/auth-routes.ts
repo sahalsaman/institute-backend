@@ -5,12 +5,6 @@ const router=Router()
 const auth = new AuthController
 
 router.post('/login', (req, res) => auth.login(req, res))
-// router.post('/teacher-login', (req, res) => {
-//     req.body.role='teacher'
-//     auth.login(req, res)})
-// router.post('/admin-login', (req, res) => {
-//     req.body.role='admin'
-//     auth.login(req, res)})
 
 router.patch('/set-password/:id', (req, res) => auth.setPassword(req, res))
 
@@ -30,6 +24,8 @@ router.post('/invite-admin', (req, res) => {
     req.body.role='user'
     auth.userInvaite(req, res)
 })
+
+router.get('/change-password', (req, res) => auth.changePassword(req, res))
 
 router.get('/profile', (req, res) => auth.getProfile(req, res))
 
