@@ -1,4 +1,6 @@
+import AttendanceModel from "../models/attandence";
 import AuthModel from "../models/auth-model";
+import BatchModel from "../models/batch-modal";
 import ExamModal from "../models/exam-modal";
 import ResultModel from "../models/result-modal";
 import StudentModel from "../models/student-modal";
@@ -83,6 +85,40 @@ export class AdminService {
 
     getResultDetail = async (_id): Promise<Iresult> => {
         return await ResultModel.findOne({ _id })
+    }
+
+    createBatch = async (data: any): Promise<any> => {
+        return await BatchModel.create(data) as any;
+    }
+
+    getBatchList = async (search?: string): Promise<any[]> => {
+        let filter: any = {}
+        if (search) {
+            filter = { $or: [{ name: { $regex: search, $options: 'i' } }] }
+        }
+        let list = await BatchModel.find(filter).sort({ 'created': -1 })
+        return list
+    }
+
+    getBatchDetail = async (_id): Promise<any> => {
+        return await BatchModel.findOne({ _id })
+    }
+
+    addAttandence = async (data: any): Promise<any> => {
+        return await AttendanceModel.create(data) as any;
+    }
+
+    getStudentsAttendance = async (search?: string): Promise<any[]> => {
+        let filter: any = {}
+        if (search) {
+            filter = { $or: [{ name: { $regex: search, $options: 'i' } }] }
+        }
+        let list = await AttendanceModel.find(filter).sort({ 'created': -1 })
+        return list
+    }
+
+    getIndividualAttendance = async (_id): Promise<any> => {
+        return await AttendanceModel.findOne({ _id })
     }
 
 }

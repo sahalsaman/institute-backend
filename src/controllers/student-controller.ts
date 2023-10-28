@@ -3,66 +3,97 @@ import { ControllerBase } from "../utils/class/controller-base"
 import { UserService } from "../services/student-service"
 import { IProduct } from "../types/interfaces/product-interface"
 import { bodyRequiredDataValidator } from "../utils/functions/validator"
+import { AdminService } from "../services/admin-service"
 
 
 export class UserController extends ControllerBase {
     private userService = new UserService()
+    private adminService = new AdminService()
 
-    addProduct = async (request: ExpressRequest, response: ExpressResponse) => {
-        const body: IProduct = request.body
-        try {
-            const required = ['product_name','price']
-            const validationError = bodyRequiredDataValidator(body, required);
-            if (validationError) {
-                return this.error(response, 400, undefined, validationError)
-            }
-            let product = []
-
-            let newProduct = {
-                product_name: body?.product_name,
-                product_category: body?.product_category,
-                company_name: body?.company_name,
-                company_logo: body?.company_logo,
-                photo_list: body?.photo_list,
-                dealer_representative: body?.dealer_representative,
-                representative: {
-                    name: body?.representative?.name,
-                    phone: body?.representative?.phone,
-                    email: body?.representative?.email,
-                },
-                price: body?.price,
-                Location: body?.Location,
-                description: body?.description,
-                condition: body?.condition,
-                Payment_Options: body?.Payment_Options,
-                // offer_aailable: body?.offer_aailable,
-                // offer: {
-                //     offer_price:body?.offer_price,
-                //     start_date: body?.start_date,
-                //     end_date: body?.end_date,
-                // },
-                created: new Date().getDate(),
-                createdBy: body?.createdBy,
-            }
-            // const res = await this.userService.craeteNewProduct(newProduct)
-            // product.push(res)
-            this.jsonResponse(response, null,product);
+    getExamList = async (request: ExpressRequest, response: ExpressResponse) => {
+        const search = request.query.search as string
+        try{
+            const list = await this.adminService.getExamList(search)
+            this.jsonResponse(response,null,{data:list})
         } catch (e) {
+            // logger.error(e)
             this.error(response, 500, null, e)
         }
+    }
 
+    getExamDetail= async (request: ExpressRequest, response: ExpressResponse) => {
+        const userId = request.query.id
+            try{
+                let user = await this.adminService.getExamDetail(userId);
+                if(!user){
+                    return this.error(response, 400, "user_not_found");
+                }
+                this.jsonResponse(response, null, user);
+            }catch(e){
+                this.error(response, 500, null, e)
+            }
+    }
+
+    getResultist = async (request: ExpressRequest, response: ExpressResponse) => {
+        const search = request.query.search as string
+        try{
+            const list = await this.adminService.getResultist(search)
+            this.jsonResponse(response,null,{data:list})
+        } catch (e) {
+            // logger.error(e)
+            this.error(response, 500, null, e)
+        }
+    }
+
+    getResultDetail= async (request: ExpressRequest, response: ExpressResponse) => {
+        const userId = request.query.id
+            try{
+                let user = await this.adminService.getResultDetail(userId);
+                if(!user){
+                    return this.error(response, 400, "user_not_found");
+                }
+                this.jsonResponse(response, null, user);
+            }catch(e){
+                this.error(response, 500, null, e)
+            }
     }
 
 
+    getBatchDetail= async (request: ExpressRequest, response: ExpressResponse) => {
+        const userId = request.query.id
+            try{
+                let user = await this.adminService.getExamDetail(userId);
+                if(!user){
+                    return this.error(response, 400, "user_not_found");
+                }
+                this.jsonResponse(response, null, user);
+            }catch(e){
+                this.error(response, 500, null, e)
+            }
+    }
 
-    getProductList = async (request: ExpressRequest, response: ExpressResponse) => {
-        try {
-            // let product = await this.userService.getProductlist();
-        
-            // this.jsonResponse(response, null, product);
+    getAttendanceList = async (request: ExpressRequest, response: ExpressResponse) => {
+        const search = request.query.search as string
+        try{
+            const list = await this.adminService.getStudentsAttendance(search)
+            this.jsonResponse(response,null,{data:list})
         } catch (e) {
+            // logger.error(e)
             this.error(response, 500, null, e)
         }
+    }
+
+    getAttendanceDetail= async (request: ExpressRequest, response: ExpressResponse) => {
+        const userId = request.query.id
+            try{
+                let user = await this.adminService.getIndividualAttendance(userId);
+                if(!user){
+                    return this.error(response, 400, "user_not_found");
+                }
+                this.jsonResponse(response, null, user);
+            }catch(e){
+                this.error(response, 500, null, e)
+            }
     }
 
 

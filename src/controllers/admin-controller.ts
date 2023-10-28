@@ -62,7 +62,7 @@ export class AdminController extends ControllerBase {
 
     createExam = async (request: ExpressRequest, response: ExpressResponse) => {
         console.log("request c", request.body)
-        const body: Iresult = request.body
+        const body = request.body
         try {
             const auth = await this.adminService.createExam(body)
             this.jsonResponse(response, null, auth);
@@ -131,33 +131,82 @@ export class AdminController extends ControllerBase {
     }
 
 
-
-
-
-
-
-    
-    getProfile = async (request: ExpressRequest, response: ExpressResponse) => {
-        const userId = request.query.id
-    //   console.log("request",request.query.id)
-        try{
-            let user = await this.authService.getUserProfile(userId);
-            let profile={
-                name:user?.name,
-                email:user?.email,
-                disabled:user?.disabled,
-                created:user?.createdAt,
-                role:user?.role,
-                _id:user?._id
-            }
-            if(!profile){
-                return this.error(response, 400, "user_not_found");
-            }
-            this.jsonResponse(response, null, profile);
-        }catch(e){
+    createBatch = async (request: ExpressRequest, response: ExpressResponse) => {
+        console.log("request c", request.body)
+        const body = request.body
+        try {
+            const auth = await this.adminService.createExam(body)
+            this.jsonResponse(response, null, auth);
+        } catch (e) {
             this.error(response, 500, null, e)
         }
     }
+
+    getBatchList = async (request: ExpressRequest, response: ExpressResponse) => {
+        const search = request.query.search as string
+        try{
+            const list = await this.adminService.getExamList(search)
+            this.jsonResponse(response,null,{data:list})
+        } catch (e) {
+            // logger.error(e)
+            this.error(response, 500, null, e)
+        }
+    }
+
+    getBatchDetail= async (request: ExpressRequest, response: ExpressResponse) => {
+        const userId = request.query.id
+            try{
+                let user = await this.adminService.getExamDetail(userId);
+                if(!user){
+                    return this.error(response, 400, "user_not_found");
+                }
+                this.jsonResponse(response, null, user);
+            }catch(e){
+                this.error(response, 500, null, e)
+            }
+    }
+
+    addAtttendance = async (request: ExpressRequest, response: ExpressResponse) => {
+        console.log("request c", request.body)
+        const body = request.body
+        try {
+            const auth = await this.adminService.addAttandence(body)
+            this.jsonResponse(response, null, auth);
+        } catch (e) {
+            this.error(response, 500, null, e)
+        }
+    }
+
+    getAttendanceList = async (request: ExpressRequest, response: ExpressResponse) => {
+        const search = request.query.search as string
+        try{
+            const list = await this.adminService.getStudentsAttendance(search)
+            this.jsonResponse(response,null,{data:list})
+        } catch (e) {
+            // logger.error(e)
+            this.error(response, 500, null, e)
+        }
+    }
+
+    getAttendanceDetail= async (request: ExpressRequest, response: ExpressResponse) => {
+        const userId = request.query.id
+            try{
+                let user = await this.adminService.getIndividualAttendance(userId);
+                if(!user){
+                    return this.error(response, 400, "user_not_found");
+                }
+                this.jsonResponse(response, null, user);
+            }catch(e){
+                this.error(response, 500, null, e)
+            }
+    }
+
+
+    
+
+
+
+
 
 
 }
