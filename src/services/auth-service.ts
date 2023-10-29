@@ -7,6 +7,7 @@ import { IAdmin, IAuth, IStudent, ITeacher } from "../types/interfaces/auth-inte
 export class AuthService{
     constructor(){}
     createAuthEntry =  async (auth:IAuth):Promise<IAuth> => {
+        console.log("auth",auth)
         return AuthModel.create(auth);
     }
 
@@ -14,7 +15,7 @@ export class AuthService{
         return AuthModel.findByIdAndUpdate(id, auth, { new: true });
     }
 
-    createStudent =  async (user:IStudent):Promise<IStudent> => {
+    createStudent =  async (user:any):Promise<any> => {
         return StudentModel.create(user);
     }
 
@@ -34,7 +35,15 @@ export class AuthService{
         return await AuthModel.findOne({email,password})
     }
 
-    getUserProfile = async (_id):Promise<IAuth> =>{
-        return await AuthModel.findOne({_id})
+    getStudentProfile = async (_id):Promise<IAuth> =>{
+        return await StudentModel.findOne({_id})
+    }
+
+    getTeacherProfile = async (_id):Promise<IAuth> =>{
+        return await TeacherModel.findOne({_id})
+    }
+
+    getAdminProfile = async (_id):Promise<IAuth> =>{
+        return await AdminModel.findOne({_id})
     }
 }

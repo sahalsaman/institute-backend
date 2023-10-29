@@ -5,6 +5,7 @@ import { ControllerBase } from "../utils/class/controller-base"
 import { email_text, mailer } from "../utils/functions/mailer"
 import { BcryptHandler } from "../utils/class/bcrypt-handler"
 import { bodyRequiredDataValidator } from "../utils/functions/validator"
+import { Role } from "../types/variables/enum"
 
 
 export class AuthController extends ControllerBase {
@@ -32,46 +33,15 @@ export class AuthController extends ControllerBase {
             } else {
                 userDetail = await this.authService.createStudent(body);
             }
+            console.log("userDetail",userDetail)
             const auth = await this.authService.createAuthEntry({
                 profile_id: userDetail?._id,
                 email: body?.email,
-                role: body.role,
+                role: body?.role,
                 updatedAt: new Date(),
                 createdAt: new Date()
             })
             const email = mailer(body?.email, email_text.student_invitation_subject, email_text.student_invitation.replace('[reciever-name]', body?.name)+ email_text.set_password_html.replace('[user-id]', auth?._id))
-            this.jsonResponse(response, null, auth);
-        } catch (e) {
-            this.error(response, 500, null, e)
-        }
-    }
-
-    studentRegister = async (request: ExpressRequest, response: ExpressResponse) => {
-        console.log("request c", request.body)
-        const body: IAuth = request.body
-        try {
-            body.email = body.email.toLowerCase()
-            let user = await this.authService.getUser(body.email);
-            if (user) {
-                return this.error(response, 400, "user already exists..!");
-            }
-            body.password = await this.bcrypt.getPasswordHash(body.password);
-            var userDetail:any
-            if (body.role == "admin") {
-                userDetail = await this.authService.createAdmin(body);
-            }else if (body.role == "user"){
-                userDetail = await this.authService.createStudent(body);
-            }else{
-                userDetail = await this.authService.createTeacher(body);
-            }
-            const auth = await this.authService.createAuthEntry({
-                profile_id: userDetail?._id,
-                email: body?.email,
-                password: body?.password,
-                role: body.role,
-                updatedAt: new Date(),
-                createdAt: new Date()
-            })
             this.jsonResponse(response, null, auth);
         } catch (e) {
             this.error(response, 500, null, e)
@@ -150,21 +120,21 @@ export class AuthController extends ControllerBase {
 
 
     getProfile = async (request: ExpressRequest, response: ExpressResponse) => {
-        const profile_id = request.query.id
+        const profile_id = request.headers['profile_id'];
+        const role = request.headers['role']
         //   console.log("request",request.query.id)
         try {
-            let user = await this.authService.getUserProfile(profile_id);
-            let profile = {
-                email: user?.email,
-                disabled: user?.disabled,
-                created: user?.createdAt,
-                role: user?.role,
-                _id: user?._id
+            if(role==Role.STUDENT)
+            var user = await this.authService.getStudentProfile(profile_id);
+            else if(role==Role.TEACHER){
+                var user = await this.authService.getTeacherProfile(profile_id);
+            }else if(role==Role.ADMIN){
+                var user = await this.authService.getAdminProfile(profile_id);
             }
-            if (!profile) {
+            if (!user) {
                 return this.error(response, 400, "user_not_found");
             }
-            this.jsonResponse(response, null, profile);
+            this.jsonResponse(response, null, user);
         } catch (e) {
             this.error(response, 500, null, e)
         }

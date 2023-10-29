@@ -3,7 +3,7 @@ import mongoose, {Schema} from "mongoose";
 const studentDetailSchema=new mongoose.Schema({
     name:{type:String},
     email:{type:String, unique:true, required:true},
-    mobile_no:{type:Number, unique:true},
+    mobile_no:{type:String},
     photo:{type:String}, 
     about:{type:String},
     contry:{type:String},

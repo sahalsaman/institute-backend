@@ -3,7 +3,7 @@ import mongoose, {Schema} from "mongoose";
 const adminDetailSchema=new mongoose.Schema({
     name:{type:String},
     email:{type:String, unique:true, required:true},
-    mobile_no:{type:Number, unique:true},
+    mobile_no:{type:String},
     photo:{type:String}, 
     address:{type:String},
     remark:{type:String},

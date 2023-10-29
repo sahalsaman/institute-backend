@@ -21,7 +21,7 @@ router.post('/invite-subadmin', (req, res) => {
     auth.userInvaite(req, res)
 })
 router.post('/invite-admin', (req, res) => {
-    req.body.role='user'
+    req.body.role='admin'
     auth.userInvaite(req, res)
 })
 

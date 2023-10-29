@@ -3,7 +3,6 @@ export interface IAuth {
     _id ?: string,
     profile_id?:string,
     name?: string,
-    mobile_no?: string,
     email ?: string,
     password?:string,
     role?:string,
