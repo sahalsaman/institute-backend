@@ -28,6 +28,7 @@ export interface IStudent {
 }
 
 export interface ITeacher {
+    _id ?: string,
     name?: string,
     email?: string,
     mobile_no?: string,

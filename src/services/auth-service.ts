@@ -20,6 +20,7 @@ export class AuthService{
     }
 
     createTeacher =  async (user:ITeacher):Promise<ITeacher> => {
+        console.log("user",user)
         return TeacherModel.create(user) as ITeacher;
     }
 
