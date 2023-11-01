@@ -8,6 +8,7 @@ const adminDetailSchema=new mongoose.Schema({
     address:{type:String},
     remark:{type:String},
     role:{type:String},
+    status:{type:String},
     disabled:{ type:Boolean,default:false },
     suspensionReason:{type:String},
     created:{type:Date,default: Date.now},

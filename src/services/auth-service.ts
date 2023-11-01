@@ -19,13 +19,37 @@ export class AuthService{
         return StudentModel.create(user);
     }
 
+    getStudentProfile = async (_id):Promise<IAuth> =>{
+        return await StudentModel.findOne({_id})
+    }
+
+    updateStudent =  async (id:any,user:any):Promise<any> => {
+        return StudentModel.findByIdAndUpdate(id, user, { new: true });
+    }
+
     createTeacher =  async (user:ITeacher):Promise<ITeacher> => {
         console.log("user",user)
         return TeacherModel.create(user) as ITeacher;
     }
 
+    getTeacherProfile = async (_id):Promise<IAuth> =>{
+        return await TeacherModel.findOne({_id})
+    }
+
+    updateTeacher =  async (id:any,user:any):Promise<any> => {
+        return TeacherModel.findByIdAndUpdate(id, user, { new: true });
+    }
+
     createAdmin =  async (user:IAdmin):Promise<IAdmin> => {
         return AdminModel.create(user) as IAdmin;
+    }
+
+    getAdminProfile = async (_id):Promise<IAuth> =>{
+        return await AdminModel.findOne({_id})
+    }
+
+    updateAdmin =  async (id:any,user:any):Promise<any> => {
+        return AdminModel.findByIdAndUpdate(id, user, { new: true });
     }
 
     getUser = async (email):Promise<IAuth> =>{
@@ -36,15 +60,7 @@ export class AuthService{
         return await AuthModel.findOne({email,password})
     }
 
-    getStudentProfile = async (_id):Promise<IAuth> =>{
-        return await StudentModel.findOne({_id})
-    }
-
-    getTeacherProfile = async (_id):Promise<IAuth> =>{
-        return await TeacherModel.findOne({_id})
-    }
-
-    getAdminProfile = async (_id):Promise<IAuth> =>{
-        return await AdminModel.findOne({_id})
+    authDetail = async (id):Promise<IAuth> =>{
+        return await AuthModel.findOne({id})
     }
 }

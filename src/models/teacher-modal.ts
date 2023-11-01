@@ -10,6 +10,7 @@ const teacherDetailSchema=new mongoose.Schema({
     subject:{type:String},
     remark:{type:String},
     role:{type:String},
+    status:{type:String},
     disabled:{ type:Boolean,default:false },
     suspensionReason:{type:String},
     created:{type:Date,default: Date.now},

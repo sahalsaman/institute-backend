@@ -5,6 +5,12 @@ export enum Role {
   STUDENT = 'student'
 }
 
+export enum UserStatus {
+  INVITED = 'invited',
+  ACTIVE = 'active',
+  INACTIVE = 'inactive'
+}
+
 export enum ITokenPayload {
   USER = 'user',
   ROLE = 'role',

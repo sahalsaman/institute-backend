@@ -5,7 +5,7 @@ import { ControllerBase } from "../utils/class/controller-base"
 import { email_text, mailer } from "../utils/functions/mailer"
 import { BcryptHandler } from "../utils/class/bcrypt-handler"
 import { bodyRequiredDataValidator } from "../utils/functions/validator"
-import { Role } from "../types/variables/enum"
+import { Role, UserStatus } from "../types/variables/enum"
 
 
 export class AuthController extends ControllerBase {
@@ -13,7 +13,7 @@ export class AuthController extends ControllerBase {
     private bcrypt = new BcryptHandler()
 
     userInvaite = async (request: ExpressRequest, response: ExpressResponse) => {
-        const body: IAuth = request.body
+        const body = request.body
         try {
             const required = ["name", "email"]
             const validationError = bodyRequiredDataValidator(body, required);
@@ -26,6 +26,7 @@ export class AuthController extends ControllerBase {
                 return this.error(response, 400, "user already exists..!");
             }
             var userDetail:any
+            body.status=UserStatus.INVITED
             if (body.role == "subadmin"||body.role == "admin") {
                 userDetail = await this.authService.createAdmin(body);
             } else if (body.role == "teacher") {
@@ -66,6 +67,21 @@ export class AuthController extends ControllerBase {
                 password: body?.password,
                 updatedAt: new Date
             })
+            let profile
+            let user = await this.authService.authDetail(id);
+            if (auth.role == Role.ADMIN||auth.role == Role.SUB_ADMIN) {
+                 profile = await this.authService.updateAdmin(id, {
+                    status:UserStatus.ACTIVE
+                })
+            } else if (auth.role == Role.TEACHER) {
+                profile = await this.authService.updateTeacher(id, {
+                    status:UserStatus.ACTIVE
+                })
+            } else if(auth.role==Role.STUDENT){
+                profile = await this.authService.updateStudent(id, {
+                    status:UserStatus.ACTIVE
+                })
+            }
             // const email=mailer(body?.email,email_text.student_registration_subject,email_text.student_registration)
             this.jsonResponse(response, null, auth);
         } catch (e) {
