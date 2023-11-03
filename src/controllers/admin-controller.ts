@@ -1,9 +1,10 @@
-import { IAuth, Iresult } from "../types/interfaces/auth-interfaces"
+import { IAuth, IBatch, Iresult } from "../types/interfaces/auth-interfaces"
 import { ExpressRequest, ExpressResponse } from "../types/interfaces/app-context-interfaces"
 import { ControllerBase } from "../utils/class/controller-base"
 import { AdminService } from "../services/admin-service"
 import { AuthService } from "../services/auth-service"
 import { IPagination } from "../types/interfaces/common-interfaces"
+import { bodyRequiredDataValidator } from "../utils/functions/validator"
 
 
 export class AdminController extends ControllerBase {
@@ -61,7 +62,6 @@ export class AdminController extends ControllerBase {
     }
 
     createExam = async (request: ExpressRequest, response: ExpressResponse) => {
-        console.log("request c", request.body)
         const body = request.body
         try {
             const auth = await this.adminService.createExam(body)
@@ -132,10 +132,14 @@ export class AdminController extends ControllerBase {
 
 
     createBatch = async (request: ExpressRequest, response: ExpressResponse) => {
-        console.log("request c", request.body)
-        const body = request.body
+        const body:IBatch = request.body
         try {
-            const auth = await this.adminService.createExam(body)
+            const required = ["name", "start_date","end_date"]
+            const validationError = bodyRequiredDataValidator(body, required);
+            if (validationError) {
+                return this.error(response, 400, undefined, validationError)
+            }
+            const auth = await this.adminService.createBatch(body)
             this.jsonResponse(response, null, auth);
         } catch (e) {
             this.error(response, 500, null, e)
@@ -145,7 +149,7 @@ export class AdminController extends ControllerBase {
     getBatchList = async (request: ExpressRequest, response: ExpressResponse) => {
         const search = request.query.search as string
         try{
-            const list = await this.adminService.getExamList(search)
+            const list = await this.adminService.getBatchList(search)
             this.jsonResponse(response,null,{data:list})
         } catch (e) {
             // logger.error(e)
@@ -156,7 +160,7 @@ export class AdminController extends ControllerBase {
     getBatchDetail= async (request: ExpressRequest, response: ExpressResponse) => {
         const userId = request.query.id
             try{
-                let user = await this.adminService.getExamDetail(userId);
+                let user = await this.adminService.getBatchDetail(userId);
                 if(!user){
                     return this.error(response, 400, "user_not_found");
                 }

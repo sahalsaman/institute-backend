@@ -1,9 +1,12 @@
 import mongoose, {Schema} from "mongoose";
 
 const ExamSchema=new mongoose.Schema({
-    _id: {type:String},
     name:{type:String},
     subjects:{type:Array},
+    batch:{type:String},
+    description:{type:String},
+    start_date:{type:String},
+    end_date:{type:String},
     remark:{type:String},
     disabled:{ type:Boolean,default:false },
     disableReason:{type:String},

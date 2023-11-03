@@ -56,6 +56,21 @@ export interface IAdmin {
     updated?:Date,
 }
 
+export interface IBatch{
+    _id ?: string,
+    name?: string,
+    course?: string,
+    start_date?: string,
+    end_date?: string,
+    students_ids?: [],
+    coordinator?: string,
+    remark?: string,
+    disabled?:boolean,
+    disableReason?: string,
+    created?: Date,
+    updated?: Date,
+}
+
 export interface Iexam{
     _id?: string,
     name?:string,

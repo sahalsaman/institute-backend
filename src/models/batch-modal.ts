@@ -1,9 +1,10 @@
 import mongoose, {Schema} from "mongoose";
 
 const BatchSchema=new mongoose.Schema({
-    _id: {type:String},
     name:{type:String},
-    batch:{type:String},
+    course:{type:String},
+    start_date:{type:String},
+    end_date:{type:String},
     students_ids:{type:Array},
     coordinator:{type:String},
     remark:{type:String},

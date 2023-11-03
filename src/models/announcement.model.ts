@@ -1,7 +1,6 @@
 import mongoose, {Schema} from "mongoose";
 
 const AnnouncementSchema=new mongoose.Schema({
-    _id: {type:String},
     sender_id:{type:String},
     reciever_id:{type:String},
     type:{type:String},

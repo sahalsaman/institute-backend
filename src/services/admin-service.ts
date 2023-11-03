@@ -5,7 +5,7 @@ import ExamModal from "../models/exam-modal";
 import ResultModel from "../models/result-modal";
 import StudentModel from "../models/student-modal";
 import TeacherModel from "../models/teacher-modal";
-import { IAuth, IStudent, ITeacher, Iexam, Iresult } from "../types/interfaces/auth-interfaces";
+import { IAuth, IBatch, IStudent, ITeacher, Iexam, Iresult } from "../types/interfaces/auth-interfaces";
 
 export class AdminService {
     constructor() { }
@@ -88,7 +88,7 @@ export class AdminService {
     }
 
     createBatch = async (data: any): Promise<any> => {
-        return await BatchModel.create(data) as any;
+        return await BatchModel.create(data);
     }
 
     getBatchList = async (search?: string): Promise<any[]> => {

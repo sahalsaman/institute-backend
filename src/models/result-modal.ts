@@ -1,7 +1,6 @@
 import mongoose, {Schema} from "mongoose";
 
 const ResultSchema=new mongoose.Schema({
-    _id: {type:String},
     student_name:{type:String},
     student_id:{type:String},
     subjects:{type:Array},

@@ -1,7 +1,6 @@
 import mongoose, {Schema} from "mongoose";
 
 const AttendanceSchema=new mongoose.Schema({
-    _id: {type:String},
     batch_id:{type:String},
     batch:{type:String},
     student_id:{type:String},
