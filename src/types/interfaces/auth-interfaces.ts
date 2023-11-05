@@ -94,6 +94,17 @@ export interface Iresult{
     updated?:Date,
 }
 
+export interface IAnnouncement{
+    _id?: string,
+    subject?:string,
+    message?:string,
+    url?:string,
+    disabled?:boolean,
+    disableReason?:string,
+    created?:Date,
+    updated?:Date,
+}
+
 export interface IToken{
     user?: string,
     role?: string,

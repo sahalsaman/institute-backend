@@ -1,4 +1,4 @@
-import { IAuth, IBatch, Iresult } from "../types/interfaces/auth-interfaces"
+import { IAnnouncement, IAuth, IBatch, Iresult } from "../types/interfaces/auth-interfaces"
 import { ExpressRequest, ExpressResponse } from "../types/interfaces/app-context-interfaces"
 import { ControllerBase } from "../utils/class/controller-base"
 import { AdminService } from "../services/admin-service"
@@ -207,6 +207,31 @@ export class AdminController extends ControllerBase {
 
 
     
+    createAnnouncement = async (request: ExpressRequest, response: ExpressResponse) => {
+        const body:IAnnouncement = request.body
+        try {
+            const required = ["subject", "message"]
+            const validationError = bodyRequiredDataValidator(body, required);
+            if (validationError) {
+                return this.error(response, 400, undefined, validationError)
+            }
+            const auth = await this.adminService.createAnnouncement(body)
+            this.jsonResponse(response, null, auth);
+        } catch (e) {
+            this.error(response, 500, null, e)
+        }
+    }
+
+    getAnnouncementList = async (request: ExpressRequest, response: ExpressResponse) => {
+        const search = request.query.search as string
+        try{
+            const list = await this.adminService.getAnnouncementList(search)
+            this.jsonResponse(response,null,{data:list})
+        } catch (e) {
+            // logger.error(e)
+            this.error(response, 500, null, e)
+        }
+    }
 
 
 

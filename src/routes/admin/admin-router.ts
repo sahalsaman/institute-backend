@@ -20,6 +20,7 @@ router.get('/get-batch-detail', (req, res) => admin.getBatchDetail(req, res))
 router.get('/get-attendance-list', (req, res) => admin.getAttendanceList(req, res))
 router.get('/get-attendance-detail', (req, res) => admin.getAttendanceDetail(req, res))
 router.get('/get-student-status-list', (req, res) => admin.getStudentList(req, res))
+router.get('/get-announcement-list', (req, res) => admin.getAnnouncementList(req, res))
 
 // router.get('/get-student-payment-list', (req, res) => admin.getStudentList(req, res))
 // router.get('/get-teacher-payment-list', (req, res) => admin.getStudentList(req, res))
@@ -28,7 +29,6 @@ router.get('/get-student-status-list', (req, res) => admin.getStudentList(req, r
 // router.get('/get-refernce', (req, res) => admin.getStudentList(req, res))
 // router.get('/get-syllabus', (req, res) => admin.getStudentList(req, res))
 // router.get('/get-notification', (req, res) => admin.getStudentList(req, res))
-// router.get('/get-announcement', (req, res) => admin.getStudentList(req, res))
 
 // post api
 
@@ -36,6 +36,7 @@ router.post('/create-exam', (req, res) => admin.createExam(req, res))
 router.post('/create-result', (req, res) => admin.addResult(req, res))
 router.post('/create-course-batch', (req, res) => admin.createBatch(req, res))
 router.post('/add-attendance', (req, res) => admin.addAtttendance(req, res))
+router.post('/create-announcement', (req, res) => admin.createAnnouncement(req, res))
 
 // router.patch('/update-attendance', (req, res) => admin.getStudentList(req, res))
 // router.post('/student-day-status', (req, res) => admin.getStudentList(req, res))
@@ -44,7 +45,6 @@ router.post('/add-attendance', (req, res) => admin.addAtttendance(req, res))
 // router.post('/create-time-schedule', (req, res) => admin.getStudentList(req, res))
 // router.post('/create-refernce', (req, res) => admin.getStudentList(req, res))
 // router.post('/create-syllabus', (req, res) => admin.getStudentList(req, res))
-// router.post('/create-announcement', (req, res) => admin.getStudentList(req, res))
 
 
 export default router

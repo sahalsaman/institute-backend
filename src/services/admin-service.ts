@@ -1,3 +1,4 @@
+import AnnouncementModel from "../models/announcement.model";
 import AttendanceModel from "../models/attandence";
 import AuthModel from "../models/auth-model";
 import BatchModel from "../models/batch-modal";
@@ -5,7 +6,7 @@ import ExamModal from "../models/exam-modal";
 import ResultModel from "../models/result-modal";
 import StudentModel from "../models/student-modal";
 import TeacherModel from "../models/teacher-modal";
-import { IAuth, IBatch, IStudent, ITeacher, Iexam, Iresult } from "../types/interfaces/auth-interfaces";
+import { IAnnouncement, IAuth, IBatch, IStudent, ITeacher, Iexam, Iresult } from "../types/interfaces/auth-interfaces";
 
 export class AdminService {
     constructor() { }
@@ -119,6 +120,19 @@ export class AdminService {
 
     getIndividualAttendance = async (_id): Promise<any> => {
         return await AttendanceModel.findOne({ _id })
+    }
+
+    createAnnouncement = async (data: IAnnouncement): Promise<IAnnouncement> => {
+        return await AnnouncementModel.create(data);
+    }
+
+    getAnnouncementList = async (search?: string): Promise<IAnnouncement[]> => {
+        let filter: any = {}
+        if (search) {
+            filter = { $or: [{ name: { $regex: search, $options: 'i' } }] }
+        }
+        let list = await AnnouncementModel.find(filter).sort({ 'created': -1 })
+        return list
     }
 
 }

@@ -1,13 +1,9 @@
 import mongoose, {Schema} from "mongoose";
 
 const AnnouncementSchema=new mongoose.Schema({
-    sender_id:{type:String},
-    reciever_id:{type:String},
-    type:{type:String},
-    subject:{type:Array},
+    subject:{type:String},
     message:{type:String},
-    date:{ type:Boolean,default:false },
-    status:{type:String},
+    url:{type:String},
     created:{type:Date,default: Date.now},
     updated:{type:Date,default: Date.now},
 })
