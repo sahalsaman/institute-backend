@@ -6,7 +6,7 @@ const admin = new AdminController
 
 // get api
 
-router.get('/me', (req, res) => admin.getStudentList(req, res))
+// router.get('/me', (req, res) => admin.getStudentList(req, res))
 router.get('/get-student-list', (req, res) => admin.getStudentList(req, res))
 router.get('/get-teacher-list', (req, res) => admin.getTeacherList(req, res))
 router.get('/get-student-detail', (req, res) => admin.getStudentDetail(req, res))
@@ -21,6 +21,7 @@ router.get('/get-attendance-list', (req, res) => admin.getAttendanceList(req, re
 router.get('/get-attendance-detail', (req, res) => admin.getAttendanceDetail(req, res))
 router.get('/get-student-status-list', (req, res) => admin.getStudentList(req, res))
 router.get('/get-announcement-list', (req, res) => admin.getAnnouncementList(req, res))
+router.get('/dashboard', (req, res) => admin.dashboard(req, res))
 
 // router.get('/get-student-payment-list', (req, res) => admin.getStudentList(req, res))
 // router.get('/get-teacher-payment-list', (req, res) => admin.getStudentList(req, res))

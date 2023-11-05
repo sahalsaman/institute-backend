@@ -233,7 +233,21 @@ export class AdminController extends ControllerBase {
         }
     }
 
-
+    dashboard = async (request: ExpressRequest, response: ExpressResponse) => {
+        try{
+            const studentCount = await this.adminService.getStudentCount()
+            const teacherCount = await this.adminService.getTeacherCount()
+            const batchCount = await (await this.adminService.getBatchList()).length
+            this.jsonResponse(response,null,{data:{
+                students:studentCount,
+                teachers:teacherCount,
+                batches:batchCount
+            }})
+        } catch (e) {
+            // logger.error(e)
+            this.error(response, 500, null, e)
+        }
+    }
 
 
 
