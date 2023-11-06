@@ -68,22 +68,21 @@ export class AuthController extends ControllerBase {
                 updatedAt: new Date
             })
             let profile
-            let user = await this.authService.authDetail(id);
             if (auth.role == Role.ADMIN||auth.role == Role.SUB_ADMIN) {
-                 profile = await this.authService.updateAdmin(id, {
+                 profile = await this.authService.updateAdmin(auth?.profile_id, {
                     status:UserStatus.ACTIVE
                 })
             } else if (auth.role == Role.TEACHER) {
-                profile = await this.authService.updateTeacher(id, {
+                profile = await this.authService.updateTeacher(auth?.profile_id, {
                     status:UserStatus.ACTIVE
                 })
-            } else if(auth.role==Role.STUDENT){
-                profile = await this.authService.updateStudent(id, {
+            } else {
+                profile = await this.authService.updateStudent(auth?.profile_id, {
                     status:UserStatus.ACTIVE
                 })
             }
             // const email=mailer(body?.email,email_text.student_registration_subject,email_text.student_registration)
-            this.jsonResponse(response, null, auth);
+            this.jsonResponse(response, null, {auth:auth,profile:profile});
         } catch (e) {
             this.error(response, 500, null, e)
         }
