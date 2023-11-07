@@ -16,6 +16,8 @@ router.get('/get-attendance', (req, res) =>user.getAttendanceDetail(req, res))
 // router.get('/get-notification', (req, res) =>user.addProduct(req, res))
 // router.get('/get-announcement', (req, res) =>user.addProduct(req, res))
 
+router.patch('/update-me', (req, res) => user.updateProfile(req, res))
+
 
 
 

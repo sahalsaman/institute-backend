@@ -4,11 +4,13 @@ import { UserService } from "../services/student-service"
 import { IProduct } from "../types/interfaces/product-interface"
 import { bodyRequiredDataValidator } from "../utils/functions/validator"
 import { AdminService } from "../services/admin-service"
+import { AuthService } from "../services/auth-service"
 
 
 export class UserController extends ControllerBase {
     private userService = new UserService()
     private adminService = new AdminService()
+    private authService = new AuthService()
 
     getExamList = async (request: ExpressRequest, response: ExpressResponse) => {
         const search = request.query.search as string
@@ -96,7 +98,16 @@ export class UserController extends ControllerBase {
             }
     }
 
-
+    updateProfile= async (request: ExpressRequest, response: ExpressResponse) => {
+        const userId = request.query.id
+            try{
+                console.log("user",userId)
+            const profile = await this.authService.updateStudent(userId, request.body)
+                this.jsonResponse(response, null, profile);
+            }catch(e){
+                this.error(response, 500, null, e)
+            }
+    }
 
 
 }

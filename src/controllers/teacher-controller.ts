@@ -5,11 +5,13 @@ import { bodyRequiredDataValidator } from "../utils/functions/validator"
 import { TeacherService } from "../services/teacher-service"
 import { AdminService } from "../services/admin-service"
 import { Iresult } from "../types/interfaces/auth-interfaces"
+import { AuthService } from "../services/auth-service"
 
 
 export class TeacherController extends ControllerBase {
     private TecherService = new TeacherService()
     private adminService = new AdminService()
+    private authService =new AuthService()
 
     getStudentList = async (request: ExpressRequest, response: ExpressResponse) => {
         const search = request.query.search as string
@@ -139,6 +141,17 @@ export class TeacherController extends ControllerBase {
                     return this.error(response, 400, "user_not_found");
                 }
                 this.jsonResponse(response, null, user);
+            }catch(e){
+                this.error(response, 500, null, e)
+            }
+    }
+
+    updateProfile= async (request: ExpressRequest, response: ExpressResponse) => {
+        const userId = request.query.id
+            try{
+                console.log("user",userId)
+            const profile = await this.authService.updateStudent(userId, request.body)
+                this.jsonResponse(response, null, profile);
             }catch(e){
                 this.error(response, 500, null, e)
             }
