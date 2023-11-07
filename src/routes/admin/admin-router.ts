@@ -38,6 +38,7 @@ router.post('/create-result', (req, res) => admin.addResult(req, res))
 router.post('/create-course-batch', (req, res) => admin.createBatch(req, res))
 router.post('/add-attendance', (req, res) => admin.addAtttendance(req, res))
 router.post('/create-announcement', (req, res) => admin.createAnnouncement(req, res))
+router.patch('/update-me', (req, res) => admin.updateProfile(req, res))
 
 // router.patch('/update-attendance', (req, res) => admin.getStudentList(req, res))
 // router.post('/student-day-status', (req, res) => admin.getStudentList(req, res))

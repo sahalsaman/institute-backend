@@ -5,6 +5,7 @@ import { AdminService } from "../services/admin-service"
 import { AuthService } from "../services/auth-service"
 import { IPagination } from "../types/interfaces/common-interfaces"
 import { bodyRequiredDataValidator } from "../utils/functions/validator"
+import { request } from "http"
 
 
 export class AdminController extends ControllerBase {
@@ -248,8 +249,18 @@ export class AdminController extends ControllerBase {
             this.error(response, 500, null, e)
         }
     }
+ 
+ 
 
-
-
+    updateProfile= async (request: ExpressRequest, response: ExpressResponse) => {
+        const userId = request.query.id
+            try{
+                console.log("user",userId)
+            const profile = await this.authService.updateAdmin(userId, request.body)
+                this.jsonResponse(response, null, profile);
+            }catch(e){
+                this.error(response, 500, null, e)
+            }
+    }
 
 }

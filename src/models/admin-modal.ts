@@ -5,7 +5,7 @@ const adminDetailSchema=new mongoose.Schema({
     email:{type:String, unique:true, required:true},
     mobile_no:{type:String},
     photo:{type:String}, 
-    address:{type:String},
+    about:{type:String},
     remark:{type:String},
     role:{type:String},
     status:{type:String},
