@@ -7,6 +7,8 @@ const teacherDetailSchema=new mongoose.Schema({
     photo:{type:String}, 
     address:{type:String},
     date_of_birth:{type:String},
+    about:{type:String},
+    gender:{type:String},
     subject:{type:String},
     remark:{type:String},
     role:{type:String},

@@ -10,6 +10,7 @@ const studentDetailSchema=new mongoose.Schema({
     states:{type:String},
     city:{type:String},
     address:{type:String},
+    gender:{type:String},
     date_of_birth:{type:String},
     course:{type:String},
     remark:{type:String},
