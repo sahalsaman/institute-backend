@@ -16,6 +16,7 @@ const studentDetailSchema=new mongoose.Schema({
     remark:{type:String},
     role:{type:String},
     status:{type:String},
+    attendance:{type:Array},
     disabled:{ type:Boolean,default:false },
     suspensionReason:{type:String},
     created:{type:Date,default: Date.now},

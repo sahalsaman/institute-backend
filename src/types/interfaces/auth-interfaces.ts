@@ -43,6 +43,7 @@ export interface ITeacher {
     remark?: string,
     role?: string,
     disabled?: boolean,
+    attendance?:any,
     created?:Date,
     updated?:Date,
 }
