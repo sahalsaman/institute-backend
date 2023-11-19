@@ -3,7 +3,9 @@ import mongoose, {Schema} from "mongoose";
 const ResultSchema=new mongoose.Schema({
     student_name:{type:String},
     student_id:{type:String},
-    subjects:{type:Array},
+    mark:{type:Array},
+    exam:{type:String},
+    course:{type:String},
     remark:{type:String},
     disabled:{ type:Boolean,default:false },
     disableReason:{type:String},
