@@ -11,10 +11,13 @@ import { IAnnouncement, IAuth, IBatch, IStudent, ITeacher, Iexam, Iresult } from
 export class AdminService {
     constructor() { }
 
-    getStudentList = async (search?: string): Promise<IStudent[]> => {
+    getStudentList = async (search?: string,batch?: string): Promise<IStudent[]> => {
         let filter: any = {}
         if (search) {
             filter = { $or: [{ name: { $regex: search, $options: 'i' } }] }
+        }
+        if (batch) {
+            filter = { $or: [{ batch: { $regex: batch, $options: 'i' } }] }
         }
         let studentList = await StudentModel.find(filter).sort({ 'created': -1 })
         return studentList

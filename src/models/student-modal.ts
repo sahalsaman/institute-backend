@@ -5,6 +5,7 @@ const studentDetailSchema=new mongoose.Schema({
     email:{type:String, unique:true, required:true},
     mobile_no:{type:String},
     photo:{type:String}, 
+    batch:{type:String},
     about:{type:String},
     contry:{type:String},
     states:{type:String},

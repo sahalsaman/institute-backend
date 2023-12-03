@@ -14,8 +14,9 @@ export class AdminController extends ControllerBase {
     
     getStudentList = async (request: ExpressRequest, response: ExpressResponse) => {
         const search = request.query.search as string
+        const batch=request.query.batch as string
         try{
-            const list = await this.adminService.getStudentList(search)
+            const list = await this.adminService.getStudentList(search,batch)
             const count = await this.adminService.getStudentCount(search)
             this.jsonResponse(response,null,{count:count,data:list})
         } catch (e) {
