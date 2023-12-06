@@ -6,6 +6,7 @@ import { AuthService } from "../services/auth-service"
 import { IPagination } from "../types/interfaces/common-interfaces"
 import { bodyRequiredDataValidator } from "../utils/functions/validator"
 import { request } from "http"
+import { query } from "express"
 
 
 export class AdminController extends ControllerBase {
@@ -286,6 +287,8 @@ export class AdminController extends ControllerBase {
     }
 
     deleteStudent = async (request: ExpressRequest, response: ExpressResponse) => {
+        console.log("--------id",request.query.id);
+        
         try{
             const list = await this.adminService.deleteUser(request?.query?.id)
             this.jsonResponse(response,null,{data:list})
