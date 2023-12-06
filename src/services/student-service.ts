@@ -1,12 +1,12 @@
 // import ProductModel from "../models/product-model";
+import ComplaintModel from "../models/complaints.model";
 import { IProduct } from "../types/interfaces/product-interface";
 
 export class UserService{
     constructor(){}
-    // craeteNewProduct=  async (product):Promise<IProduct> => {
-    //     console.log("product service",product)
-    //     return ProductModel.create(product);
-    // }
+    complaintRegister=  async (data) => {
+        return ComplaintModel.create(data);
+    }
 
     // getProductlist = async ():Promise<IProduct[]> =>{
     //     return await ProductModel.find().sort({_id:1});

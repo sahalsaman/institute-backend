@@ -2,6 +2,7 @@ import AnnouncementModel from "../models/announcement.model";
 import AttendanceModel from "../models/attandence";
 import AuthModel from "../models/auth-model";
 import BatchModel from "../models/batch-modal";
+import ComplaintModel from "../models/complaints.model";
 import ExamModal from "../models/exam-modal";
 import ResultModel from "../models/result-modal";
 import StudentModel from "../models/student-modal";
@@ -136,6 +137,43 @@ export class AdminService {
         }
         let list = await AnnouncementModel.find(filter).sort({ 'created': -1 })
         return list
+    }
+
+    getComplaints=  async (search?:any) => {
+        let filter: any = {}
+        if (search) {
+            filter = { $or: [{ name: { $regex: search, $options: 'i' } }] }
+        }
+        let list = await ComplaintModel.find(filter).sort({ 'created': -1 })
+        return list
+    }
+
+    updateComplaint =  async (id:any,data:any):Promise<any> => {
+        return ComplaintModel.findByIdAndUpdate(id, data, { new: true });
+    }
+
+    deleteUser=  async (id:any) => {
+        return StudentModel.findByIdAndDelete(id);
+    }
+
+    deleteTeacher =  async (id:any) => {
+        return TeacherModel.findByIdAndDelete(id);
+    }
+
+    deleteBatch =  async (id:any) => {
+        return BatchModel.findByIdAndDelete(id);
+    }
+
+    deleteExam =  async (id:any) => {
+        return ExamModal.findByIdAndDelete(id);
+    }
+
+    deleteAnnouncement =  async (id:any) => {
+        return AnnouncementModel.findByIdAndDelete(id);
+    }
+
+    deleteComplaint =  async (id:any) => {
+        return ComplaintModel.findByIdAndDelete(id);
     }
 
 }

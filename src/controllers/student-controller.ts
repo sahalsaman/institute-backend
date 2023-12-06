@@ -110,4 +110,13 @@ export class UserController extends ControllerBase {
     }
 
 
+    complaintRegister= async (request: ExpressRequest, response: ExpressResponse) => {
+            try{
+            const profile = await this.userService.complaintRegister(request.body)
+                this.jsonResponse(response, null, profile);
+            }catch(e){
+                this.error(response, 500, null, e)
+            }
+    }
+
 }

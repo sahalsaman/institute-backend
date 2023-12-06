@@ -264,4 +264,45 @@ export class AdminController extends ControllerBase {
             }
     }
 
+    getComplaintLst = async (request: ExpressRequest, response: ExpressResponse) => {
+        const search = request.query.search as string
+        try{
+            const list = await this.adminService.getComplaints(search)
+            this.jsonResponse(response,null,{data:list})
+        } catch (e) {
+            // logger.error(e)
+            this.error(response, 500, null, e)
+        }
+    }
+
+    updateComplaint = async (request: ExpressRequest, response: ExpressResponse) => {
+        try{
+            const list = await this.adminService.updateComplaint(request.body.id,request.body)
+            this.jsonResponse(response,null,{data:list})
+        } catch (e) {
+            // logger.error(e)
+            this.error(response, 500, null, e)
+        }
+    }
+
+    deleteStudent = async (request: ExpressRequest, response: ExpressResponse) => {
+        try{
+            const list = await this.adminService.deleteUser(request?.query?.id)
+            this.jsonResponse(response,null,{data:list})
+        } catch (e) {
+            // logger.error(e)
+            this.error(response, 500, null, e)
+        }
+    }
+
+    deleteTeacher = async (request: ExpressRequest, response: ExpressResponse) => {
+        try{
+            const list = await this.adminService.deleteTeacher(request?.query?.id)
+            this.jsonResponse(response,null,{data:list})
+        } catch (e) {
+            // logger.error(e)
+            this.error(response, 500, null, e)
+        }
+    }
+
 }

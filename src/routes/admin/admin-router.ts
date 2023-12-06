@@ -22,6 +22,7 @@ router.get('/get-attendance-detail', (req, res) => admin.getAttendanceDetail(req
 router.get('/get-student-status-list', (req, res) => admin.getStudentList(req, res))
 router.get('/get-announcement-list', (req, res) => admin.getAnnouncementList(req, res))
 router.get('/dashboard', (req, res) => admin.dashboard(req, res))
+router.get('/get-complaint-list', (req, res) => admin.getComplaintLst(req, res))
 
 // router.get('/get-student-payment-list', (req, res) => admin.getStudentList(req, res))
 // router.get('/get-teacher-payment-list', (req, res) => admin.getStudentList(req, res))
@@ -39,6 +40,7 @@ router.post('/create-course-batch', (req, res) => admin.createBatch(req, res))
 router.post('/add-attendance', (req, res) => admin.addAtttendance(req, res))
 router.post('/create-announcement', (req, res) => admin.createAnnouncement(req, res))
 router.patch('/update-me', (req, res) => admin.updateProfile(req, res))
+router.patch('/update-complaint', (req, res) => admin.updateComplaint(req, res))
 
 // router.patch('/update-attendance', (req, res) => admin.getStudentList(req, res))
 // router.post('/student-day-status', (req, res) => admin.getStudentList(req, res))
@@ -47,6 +49,9 @@ router.patch('/update-me', (req, res) => admin.updateProfile(req, res))
 // router.post('/create-time-schedule', (req, res) => admin.getStudentList(req, res))
 // router.post('/create-refernce', (req, res) => admin.getStudentList(req, res))
 // router.post('/create-syllabus', (req, res) => admin.getStudentList(req, res))
+
+router.delete('/delete-student', (req, res) => admin.deleteStudent(req, res))
+router.delete('/delete-teacher', (req, res) => admin.deleteTeacher(req, res))
 
 
 export default router
