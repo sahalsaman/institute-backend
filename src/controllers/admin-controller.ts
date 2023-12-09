@@ -307,5 +307,41 @@ export class AdminController extends ControllerBase {
             this.error(response, 500, null, e)
         }
     }
+    deleteBatch = async (request: ExpressRequest, response: ExpressResponse) => {
+        try{
+            const list = await this.adminService.deleteBatch(request?.query?.id)
+            this.jsonResponse(response,null,{data:list})
+        } catch (e) {
+            // logger.error(e)
+            this.error(response, 500, null, e)
+        }
+    }
+    deleteExam = async (request: ExpressRequest, response: ExpressResponse) => {
+        try{
+            const list = await this.adminService.deleteExam(request?.query?.id)
+            this.jsonResponse(response,null,{data:list})
+        } catch (e) {
+            // logger.error(e)
+            this.error(response, 500, null, e)
+        }
+    }
+    deleteAnnouncement = async (request: ExpressRequest, response: ExpressResponse) => {
+        try{
+            const list = await this.adminService.deleteAnnouncement(request?.query?.id)
+            this.jsonResponse(response,null,{data:list})
+        } catch (e) {
+            // logger.error(e)
+            this.error(response, 500, null, e)
+        }
+    }
+    deleteComplaint = async (request: ExpressRequest, response: ExpressResponse) => {
+        try{
+            const list = await this.adminService.deleteComplaint(request?.query?.id)
+            this.jsonResponse(response,null,{data:list})
+        } catch (e) {
+            // logger.error(e)
+            this.error(response, 500, null, e)
+        }
+    }
 
 }

@@ -52,6 +52,11 @@ router.patch('/update-complaint', (req, res) => admin.updateComplaint(req, res))
 
 router.delete('/delete-student', (req, res) => admin.deleteStudent(req, res))
 router.delete('/delete-teacher', (req, res) => admin.deleteTeacher(req, res))
+router.delete('/delete-batch', (req, res) => admin.deleteBatch(req, res))
+router.delete('/delete-exam', (req, res) => admin.deleteExam(req, res))
+router.delete('/delete-announcement', (req, res) => admin.deleteAnnouncement(req, res))
+router.delete('/delete-complaint', (req, res) => admin.deleteComplaint(req, res))
+
 
 
 export default router
