@@ -114,13 +114,23 @@ export class UserController extends ControllerBase {
     complaintRegister= async (request: ExpressRequest, response: ExpressResponse) => {
         const body:IComplaint = request.body
         try {
-            const required = ["subject", "message"]
+            const required = ["student_id", "message"]
             const validationError = bodyRequiredDataValidator(body, required);
             if (validationError) {
                 return this.error(response, 400, undefined, validationError)
             }
-            const auth = await this.adminService.complaintRegister(body)
-            this.jsonResponse(response, null, auth);
+            const res = await this.adminService.complaintRegister(body)
+            this.jsonResponse(response, null, res);
+        } catch (e) {
+            this.error(response, 500, null, e)
+        }
+    }
+
+    myComplaints= async (request: ExpressRequest, response: ExpressResponse) => {
+   
+        try {
+            const res = await this.adminService.getcComplaintByuser(request.query.id)
+            this.jsonResponse(response, null, res);
         } catch (e) {
             this.error(response, 500, null, e)
         }

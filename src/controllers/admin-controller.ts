@@ -112,7 +112,7 @@ export class AdminController extends ControllerBase {
     getResultist = async (request: ExpressRequest, response: ExpressResponse) => {
         const search = request.query.search as string
         try{
-            const list = await this.adminService.getResultist(search)
+            const list = await this.adminService.getResultist(request.body.id,search)
             this.jsonResponse(response,null,{data:list})
         } catch (e) {
             // logger.error(e)
@@ -267,6 +267,7 @@ export class AdminController extends ControllerBase {
 
 
     getComplaintLst = async (request: ExpressRequest, response: ExpressResponse) => {
+        
         const search = request.query.search as string
         try{
             const list = await this.adminService.getComplaints(search)
@@ -278,6 +279,8 @@ export class AdminController extends ControllerBase {
     }
 
     updateComplaint = async (request: ExpressRequest, response: ExpressResponse) => {
+
+        console.log("df");
         try{
             const list = await this.adminService.updateComplaint(request.body.id,request.body)
             this.jsonResponse(response,null,{data:list})

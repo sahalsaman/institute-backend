@@ -81,12 +81,14 @@ export class AdminService {
         return await ResultModel.create(data) as Iresult;
     }
 
-    getResultist = async (search?: string): Promise<Iresult[]> => {
+    getResultist = async (id:any,search?: string): Promise<Iresult[]> => {
         let filter: any = {}
         if (search) {
             filter = { $or: [{ student_name: { $regex: search, $options: 'i' } }] }
         }
-        let list = await ResultModel.find(filter).sort({ 'created': -1 })
+        console.log(id);
+        
+        const list = await ResultModel.find().sort({ created: -1 }).exec();
         return list
     }
 
@@ -151,7 +153,9 @@ export class AdminService {
     }
 
     updateComplaint =  async (id:any,data:any):Promise<any> => {
-        return ComplaintModel.findByIdAndUpdate(id, data, { new: true });
+        console.log("Dcfgbhjuk");
+        
+        return ComplaintModel.findByIdAndUpdate(id, data);
     }
 
     deleteUser=  async (id:any) => {
@@ -177,8 +181,12 @@ export class AdminService {
     deleteComplaint =  async (id:any) => {
         return ComplaintModel.findByIdAndDelete(id);
     }
-    complaintRegister = async (data: IComplaint): Promise<IComplaint> => {
+    complaintRegister = async (data: any) => {
         return await ComplaintModel.create(data);
+    }
+
+    getcComplaintByuser = async (id:any) => {
+        return await ComplaintModel.find({student_id:id});
     }
     
 

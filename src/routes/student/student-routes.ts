@@ -18,7 +18,8 @@ router.get('/get-attendance', (req, res) =>user.getAttendanceDetail(req, res))
 
 router.patch('/update-me', (req, res) => user.updateProfile(req, res))
 
-router.patch('/complaint-register', (req, res) => user.complaintRegister(req, res))
+router.post('/complaint-register', (req, res) => user.complaintRegister(req, res))
+router.get('/my-complaints', (req, res) => user.myComplaints(req, res))
 
 
 
