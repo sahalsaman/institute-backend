@@ -7,9 +7,11 @@ import ExamModal from "../models/exam-modal";
 import ResultModel from "../models/result-modal";
 import StudentModel from "../models/student-modal";
 import TeacherModel from "../models/teacher-modal";
-import { IAnnouncement, IAuth, IBatch, IStudent, ITeacher, Iexam, Iresult } from "../types/interfaces/auth-interfaces";
+import { IAnnouncement, IAuth, IBatch, IComplaint, IStudent, ITeacher, Iexam, Iresult } from "../types/interfaces/auth-interfaces";
 
 export class AdminService {
+ 
+
     constructor() { }
 
     getStudentList = async (search?: string,batch?: string): Promise<IStudent[]> => {
@@ -175,5 +177,9 @@ export class AdminService {
     deleteComplaint =  async (id:any) => {
         return ComplaintModel.findByIdAndDelete(id);
     }
+    complaintRegister = async (data: IComplaint): Promise<IComplaint> => {
+        return await ComplaintModel.create(data);
+    }
+    
 
 }

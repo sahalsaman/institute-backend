@@ -5,6 +5,7 @@ import { IProduct } from "../types/interfaces/product-interface"
 import { bodyRequiredDataValidator } from "../utils/functions/validator"
 import { AdminService } from "../services/admin-service"
 import { AuthService } from "../services/auth-service"
+import { IAnnouncement, IComplaint } from "../types/interfaces/auth-interfaces"
 
 
 export class UserController extends ControllerBase {
@@ -111,12 +112,18 @@ export class UserController extends ControllerBase {
 
 
     complaintRegister= async (request: ExpressRequest, response: ExpressResponse) => {
-            try{
-            const profile = await this.userService.complaintRegister(request.body)
-                this.jsonResponse(response, null, profile);
-            }catch(e){
-                this.error(response, 500, null, e)
+        const body:IComplaint = request.body
+        try {
+            const required = ["subject", "message"]
+            const validationError = bodyRequiredDataValidator(body, required);
+            if (validationError) {
+                return this.error(response, 400, undefined, validationError)
             }
+            const auth = await this.adminService.complaintRegister(body)
+            this.jsonResponse(response, null, auth);
+        } catch (e) {
+            this.error(response, 500, null, e)
+        }
     }
 
 }

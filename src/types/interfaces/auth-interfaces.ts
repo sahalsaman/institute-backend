@@ -121,3 +121,13 @@ export interface ITokenPayload{
     role?: string,
     token?: string,
 }
+export interface IComplaint{
+    _id?: string,
+    subject?:string,
+    message?:string,
+    url?:string,
+    disabled?:boolean,
+    disableReason?:string,
+    created?:Date,
+    updated?:Date,
+}
