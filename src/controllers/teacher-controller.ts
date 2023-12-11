@@ -156,5 +156,16 @@ export class TeacherController extends ControllerBase {
                 this.error(response, 500, null, e)
             }
     }
+    updateProfileTeacher= async (request: ExpressRequest, response: ExpressResponse) => {
+        const userId = request.query.id
+            try{
+                console.log("user",userId)
+            const profile = await this.authService.updateTeacher(userId, request.body)
+                this.jsonResponse(response, null, profile);
+            }catch(e){
+                this.error(response, 500, null, e)
+            }
+    }
+
 
 }

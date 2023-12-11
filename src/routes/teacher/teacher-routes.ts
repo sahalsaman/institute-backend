@@ -23,7 +23,7 @@ router.get('/get-attendance', (req, res) => teacher.getAttendanceDetail(req, res
 // post api
 router.post('/create-result', (req, res) => teacher.addResult(req, res))
 router.post('/update-attendance', (req, res) => teacher.addAtttendance(req, res))
-router.patch('/update-me', (req, res) => teacher.updateProfile(req, res))
+router.patch('/update-me', (req, res) => teacher.updateProfileTeacher(req, res))
 // router.post('/student-day-status', (req, res) => teacher.addProduct(req, res))
 // router.post('/create-refernce', (req, res) => teacher.addProduct(req, res))
 // router.post('/create-announcement', (req, res) => teacher.addProduct(req, res))
