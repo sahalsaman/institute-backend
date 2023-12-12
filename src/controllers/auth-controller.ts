@@ -137,7 +137,7 @@ export class AuthController extends ControllerBase {
     getProfile = async (request: ExpressRequest, response: ExpressResponse) => {
         const profile_id = request.headers['profile_id'];
         const role = request.headers['role']
-        //   console.log("request",request.query.id)
+          console.log("role",request.headers)
         try {
             if(role==Role.STUDENT)
             var user = await this.authService.getStudentProfile(profile_id);

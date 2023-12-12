@@ -7,6 +7,7 @@ import { IPagination } from "../types/interfaces/common-interfaces"
 import { bodyRequiredDataValidator } from "../utils/functions/validator"
 import { request } from "http"
 import { query } from "express"
+import { log } from "console"
 
 
 export class AdminController extends ControllerBase {
@@ -122,6 +123,8 @@ export class AdminController extends ControllerBase {
 
     getResultDetail= async (request: ExpressRequest, response: ExpressResponse) => {
         const userId = request.query.id
+        console.log(userId);
+        debugger;
             try{
                 let user = await this.adminService.getResultDetail(userId);
                 if(!user){
